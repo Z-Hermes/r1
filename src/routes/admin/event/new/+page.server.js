@@ -1,0 +1,35 @@
+import pool from '$lib/server/database.js';
+import  { redirect } from '@sveltejs/kit';
+
+
+export async function load(){
+
+    const [rows] = await pool.execute('SELECT * FROM categories');
+    return{
+        categories: rows
+    }
+}
+
+export const actions = {
+
+    create: async ({request}) =>{
+        const formData = await request.formData();
+        const name = formData.get('name');
+        const description = formData.get('description');
+        const startdate = formData.get('startdate');
+        const starttime = formData.get('starttime');
+        const categorieID = formData.get('categorie');
+
+        console.log(name, description, startdate, starttime);
+
+
+    await pool.execute(
+        'INSERT INTO events (name, description, startdate, starttime, category_id) values (?,?,?,?,?)',
+        [name,description,startdate, starttime, categorieID]
+    );
+
+    redirect(303, '/admin/events');
+
+}
+
+};
