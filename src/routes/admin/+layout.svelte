@@ -1,5 +1,5 @@
 <script>
-    let{ hildren } = $props();
+    let{ children } = $props();
 </script>
 
 <header>Admin Dashboard</header>

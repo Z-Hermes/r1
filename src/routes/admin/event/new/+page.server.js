@@ -2,8 +2,9 @@ import pool from '$lib/server/database.js';
 import  { redirect } from '@sveltejs/kit';
 
 
-export async function load(){
+export async function load({ locals }){
 
+    if (!locals.user) redirect(302, '/login');
     const [rows] = await pool.execute('SELECT * FROM categories');
     return{
         categories: rows

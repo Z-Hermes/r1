@@ -2,6 +2,7 @@ import pool from "$lib/server/database.js";
 
 export async function load() {
 
+    if (!locals.user) redirect(302, '/login');
     const [rows] = await pool.execute('SELECT * from categories');
 
     return {
